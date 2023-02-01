@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./pb";
+
+service Product {
+  rpc Product(ProductItemReq) returns (ProductItem) ;
+  rpc Products(ProductReq) returns(ProductResp);
+  rpc ProductList(ProductListReq) returns(ProductListResp);
+
+  rpc HotProducts(HotProductsReq) returns (HotProductsResp);
+
+  rpc UpdateProductStock(UpdateProductStockReq) returns (UpdateProductStockResp);
+  rpc CheckAndUpdateStock(CheckAndUpdateStockReq) returns (CheckAndUpdateStockResp);
+  rpc CheckProductStock(UpdateProductStockReq) returns (UpdateProductStockResp);
+  rpc RollbackProductStock(UpdateProductStockReq) returns (UpdateProductStockResp);
+  rpc DecrStock(DecrStockReq) returns(DecrStockResp);
+  rpc DecrStockRevert(DecrStockReq) returns(DecrStockResp);
+}
+
+message ProductItemReq {
+  int64 product_id = 1;
+}
+
+message ProductReq {
+  string product_ids = 1;
+}
+
+message ProductResp {
+  map<int64, ProductItem> products = 1;
+}
+
+message ProductListReq {
+  int32 category_id = 1;
+  int64 page = 2;
+  int32 pagesize = 3;
+  int64 product_id = 4;
+}
+
+message ProductListResp {
+  int64 total = 1;
+  int64 timestamp = 2;
+  int64 product_id = 3;
+  repeated ProductItem products = 4;
+}
+
+message HotProductsReq {
+}
+
+message HotProductsResp {
+  repeated ProductItem products = 1;
+}
+
+message ProductItem {
+  int64 product_id = 1;
+  string name = 2;
+  string description = 3;
+  string image_url = 4;
+  int64 create_time = 5;
+  int64 stock = 6;
+  int64 cateid = 7;
+  double price = 8;
+  int64 status = 9;
+}
+
+message UpdateProductStockReq {
+  int64 product_id = 1;
+  int64 num = 2;
+}
+
+message UpdateProductStockResp {
+}
+
+message CheckAndUpdateStockReq {
+  int64 product_id = 1;
+}
+
+message CheckAndUpdateStockResp {
+}
+
+message DecrStockReq {
+  int64 id = 1;
+  int64 num = 2;
+}
+
+message DecrStockResp {
+}
